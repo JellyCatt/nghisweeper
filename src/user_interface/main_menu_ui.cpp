@@ -12,20 +12,23 @@ MainMenuUI::MainMenuUI(std::shared_ptr<renderer::Renderer> renderer,
              std::shared_ptr<logger::Logger> logger) : UI(renderer, logger), local_hint_and_help_{} {
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("1", std::bind(&MainMenuUI::ExecuteNewGame, this)));
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("2", std::bind(&MainMenuUI::ExecuteHelp, this)));
-  ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("0", std::bind(&MainMenuUI::ExecuteExit, this)));
+  ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("3", std::bind(&MainMenuUI::ExecuteExit, this)));
 }
 
 global_type::ReturnStruct MainMenuUI::FeedCommand(const std::vector<std::string>& command) {
   // the first element of vector will be the command for MainMenu UI
+  LOG("MainMenuUI::FeedCommand() A command has been feed to MainMenu UI ");
+  global_type::ReturnStruct ret;
+
   std::string choice = *(command.begin());
   auto execute_it = ui_execute_map_.find(choice);
   if (execute_it != ui_execute_map_.end()) {
-    return execute_it->second();
+    ret = execute_it->second();
   } else {
-    local_hint_and_help_.clear();
-    local_hint_and_help_.emplace("1", "Stop messing around please :)");
-    return RenderUI();
+    ret = ExecuteOther();
   }
+  RenderUI();
+  return ret;
 }
 
 global_type::ReturnStruct MainMenuUI::RenderUI() {
@@ -62,5 +65,12 @@ global_type::ReturnStruct MainMenuUI::ExecuteExit() {
   LOG("ExecuteExit called");
   local_hint_and_help_.emplace("1", "I will die and you cannot see it");
   return global_type::ReturnStruct{.state_=global_type::ReturnState::TERMINATED};
+}
+
+global_type::ReturnStruct MainMenuUI::ExecuteOther() {
+  local_hint_and_help_.clear();
+  LOG("ExecuteOther called");
+  local_hint_and_help_.emplace("1", "Stop messing around please :)");
+  return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 } // namespace ui

@@ -18,6 +18,7 @@ private:
   global_type::ReturnStruct ExecuteNewGame();
   global_type::ReturnStruct ExecuteHelp();
   global_type::ReturnStruct ExecuteExit();
+  global_type::ReturnStruct ExecuteOther();
 
   std::map<std::string,std::string> local_hint_and_help_;
 };

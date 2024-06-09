@@ -9,22 +9,22 @@
 #include <mutex>
 #include <sstream>
 
-class Clock {
-public:
-  static int64_t GetUTC_ms() {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(
-               std::chrono::system_clock::now().time_since_epoch())
-        .count();
-  }
-};
+// class Clock {
+// public:
+//   static int64_t GetUTC_ms() {
+//     return std::chrono::duration_cast<std::chrono::milliseconds>(
+//                std::chrono::system_clock::now().time_since_epoch())
+//         .count();
+//   }
+// };
 
-class Base {
-public:
-  virtual void DoSomething() = 0;
-private:
-};
+// class Base {
+// public:
+//   virtual void DoSomething() = 0;
+// private:
+// };
 
 int main() {
-
+  std::cout << "Hello this is main" << std::endl;
   return 0;
 }

@@ -35,7 +35,6 @@ void ConsoleCommandReader::ReaderLoop() {
       if (call_stt.state_ != global_type::ReturnState::OK) {
         LOG("ReaderLoop() callback call failed: " << call_stt.info_);
       }
-      
     }
   }
 }

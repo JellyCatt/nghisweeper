@@ -33,19 +33,16 @@ global_type::ReturnStruct GameManager::GameCommand(const std::string& command) {
 
   std::vector<std::string> command_arg = ExtractCommandArg(command);
   if (command_arg.size() == 0) {
-    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK};
+    LOG("GameManager::GameCommand() command arg vector is empty, adding pseudo empty string to it...");
+    command_arg.push_back("");
   }
 
-  return ui_manager_->FeedCommand(command_arg);
-  
-  // std::cout << "command lenght: " << command_arg.size() << std::endl;
-  // std::cout << "Got command elements as following:" << std::endl;
-  // int count = 0;
-  // for (auto& it : command_arg) {
-  //   std::cout << count << " : " << it << std::endl;
-  //   count++;
-  // }
-  // return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
+  global_type::ReturnStruct call_stt;
+  call_stt = ui_manager_->FeedCommand(command_arg);
+  if (call_stt.state_ == global_type::ReturnState::TERMINATED) {
+    command_reader_->StopCommandReading();
+  }
+  return call_stt;
 }
 
 std::string GameManager::PreProcessingCommand(const std::string& command) {
