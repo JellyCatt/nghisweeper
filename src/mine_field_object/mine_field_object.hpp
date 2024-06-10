@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "logger.hpp"
+#include "global_type.hpp"
 namespace mine_field {
 
 enum class UserInterract {
@@ -28,25 +29,14 @@ struct Cell
 
 using mine_field_data=std::vector<std::vector<Cell>>;
 class MineField {
-  enum class ReturnCode {
-    SUCCESS,
-    FAILED,
-    GAME_END,
-    UNKNOWN
-  };
-  struct ReturnStruct {
-    ReturnCode code_{ReturnCode::UNKNOWN};
-    std::string info_{""};
-  };
-  
 public:
   MineField(mine_field_data data);
 
   // run-time interraction
-  ReturnStruct Flag(Position pos);
-  ReturnStruct Question(Position pos);
-  ReturnStruct Reveal(Position pos);
-  ReturnStruct SmartReveal(Position pos);
+  global_type::ReturnStruct Flag(Position pos);
+  global_type::ReturnStruct Question(Position pos);
+  global_type::ReturnStruct Reveal(Position pos);
+  global_type::ReturnStruct SmartReveal(Position pos);
 
   std::vector<std::vector<Cell>> GetMapData() const { return map_data_; }
   uint16_t GetHeight() const { return height_; }

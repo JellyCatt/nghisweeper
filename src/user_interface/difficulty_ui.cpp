@@ -50,7 +50,11 @@ global_type::ReturnStruct DifficultyUI::SelectEasy() {
   local_hint_and_help_.clear();
   LOG("Easy selected");
   local_hint_and_help_.emplace("1", "You choose EASY, be ready :)");
-  // todo: do something more to change ui
+
+  current_state_ = UI::UIState::END;
+  next_session_ = UISession::GAME_PLAY;
+  next_session_info_.emplace("difficulty", "easy");
+  
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 
@@ -58,7 +62,11 @@ global_type::ReturnStruct DifficultyUI::SelectMedium() {
   local_hint_and_help_.clear();
   LOG("Easy selected");
   local_hint_and_help_.emplace("1", "You choose MEDIUM, be ready :)");
-  // todo: do something more to change ui
+  
+  current_state_ = UI::UIState::END;
+  next_session_ = UISession::GAME_PLAY;
+  next_session_info_.emplace("difficulty", "medium");
+
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 
@@ -66,7 +74,11 @@ global_type::ReturnStruct DifficultyUI::SelectHard() {
   local_hint_and_help_.clear();
   LOG("Easy selected");
   local_hint_and_help_.emplace("1", "You choose HARD, be ready :)");
-  // todo: do something more to change ui
+  
+  current_state_ = UI::UIState::END;
+  next_session_ = UISession::GAME_PLAY;
+  next_session_info_.emplace("difficulty", "medium");
+
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 
@@ -76,7 +88,7 @@ global_type::ReturnStruct DifficultyUI::SelectBack() {
   local_hint_and_help_.emplace("1", "You choose BACK TO MAIN MENU, backing...");
   
   current_state_ = UI::UIState::END;
-  next_session_ = ui::UISession::MAIN_MENU;
+  next_session_ = UISession::MAIN_MENU;
   
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
@@ -85,15 +97,15 @@ global_type::ReturnStruct DifficultyUI::SelectExit() {
   local_hint_and_help_.clear();
   LOG("Easy selected");
   local_hint_and_help_.emplace("1", "You choose EXIT? Oh no...");
-  // todo: do something more to change ui
+  
   return global_type::ReturnStruct{.state_=global_type::ReturnState::TERMINATED};
 }
 
 global_type::ReturnStruct DifficultyUI::SelectOther() {
   local_hint_and_help_.clear();
   LOG("Easy selected");
-  local_hint_and_help_.emplace("1", "Stop choosing nonsense :)");
-  // todo: do something more to change ui
+  local_hint_and_help_.emplace("1", "Choose wisely :)");
+  
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 } // namespace ui

@@ -17,54 +17,54 @@ bool MineField::IsOutOfBound(Position pos) {
   return false;
 }
 
-MineField::ReturnStruct MineField::Flag(Position pos) {
+global_type::ReturnStruct MineField::Flag(Position pos) {
   if (IsOutOfBound(pos)) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Out of bound!!!"};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Out of bound!!!"};
   }
   if (map_data_[pos.row_][pos.col_].is_revealed_) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Flag FAILED!! Cell already reveiled..."};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Flag FAILED!! Cell already reveiled..."};
   }
   if (map_data_[pos.row_][pos.col_].user_interract_ == UserInterract::FLAGGED) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Flag FAILED!! Cell already flagged..."};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Flag FAILED!! Cell already flagged..."};
   }
   map_data_[pos.row_][pos.col_].user_interract_ = UserInterract::FLAGGED;
-  return ReturnStruct{.code_=ReturnCode::SUCCESS,.info_=""};
+  return global_type::ReturnStruct{.state_=global_type::ReturnState::OK,.info_=""};
 }
 
-MineField::ReturnStruct MineField::Question(Position pos) {
+global_type::ReturnStruct MineField::Question(Position pos) {
   if (IsOutOfBound(pos)) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Out of bound!!!"};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Out of bound!!!"};
   }
   if (map_data_[pos.row_][pos.col_].is_revealed_) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Flag FAILED!! Cell already reveiled..."};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Flag FAILED!! Cell already reveiled..."};
   }
   if (map_data_[pos.row_][pos.col_].user_interract_ == UserInterract::QUESTIONED) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Flag FAILED!! Cell already flagged..."};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Flag FAILED!! Cell already flagged..."};
   }
   map_data_[pos.row_][pos.col_].user_interract_ = UserInterract::QUESTIONED;
-  return ReturnStruct{.code_=ReturnCode::SUCCESS,.info_=""};
+  return global_type::ReturnStruct{.state_=global_type::ReturnState::OK,.info_=""};
 }
 
-MineField::ReturnStruct MineField::Reveal(Position pos) {
+global_type::ReturnStruct MineField::Reveal(Position pos) {
   if (IsOutOfBound(pos)) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Out of bound!!!"};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Out of bound!!!"};
   }
   if (map_data_[pos.row_][pos.col_].is_revealed_) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Flag FAILED!! Cell already reveiled..."};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Flag FAILED!! Cell already reveiled..."};
   }
   if (map_data_[pos.row_][pos.col_].content_ < 9) {
     map_data_[pos.row_][pos.col_].is_revealed_ = true;
-    return ReturnStruct{.code_=ReturnCode::SUCCESS,.info_=""};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::OK,.info_=""};
   } else {
-    return ReturnStruct{.code_=ReturnCode::GAME_END,.info_="You stepped on a bomb :)"};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="You stepped on a bomb :)"};
   }
 }
 
-MineField::ReturnStruct MineField::SmartReveal(Position pos) {
+global_type::ReturnStruct MineField::SmartReveal(Position pos) {
   if (IsOutOfBound(pos)) {
-    return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Out of bound!!!"};
+    return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Out of bound!!!"};
   }
-  return ReturnStruct{.code_=ReturnCode::FAILED,.info_="Feature not yet supported :)"};
+  return global_type::ReturnStruct{.state_=global_type::ReturnState::NOT_OK,.info_="Feature not yet supported :)"};
 }
 
 } // namespace mine_field
