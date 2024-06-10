@@ -9,7 +9,8 @@
 
 namespace ui {
 MainMenuUI::MainMenuUI(std::shared_ptr<renderer::Renderer> renderer,
-             std::shared_ptr<logger::Logger> logger) : UI(renderer, logger), local_hint_and_help_{} {
+             std::shared_ptr<logger::Logger> logger,
+             std::map<std::string,std::string> init_info) : UI(renderer, logger, init_info), local_hint_and_help_{} {
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("1", std::bind(&MainMenuUI::ExecuteNewGame, this)));
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("2", std::bind(&MainMenuUI::ExecuteHelp, this)));
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("3", std::bind(&MainMenuUI::ExecuteExit, this)));
@@ -27,6 +28,7 @@ global_type::ReturnStruct MainMenuUI::FeedCommand(const std::vector<std::string>
   } else {
     ret = ExecuteOther();
   }
+  local_hint_and_help_.emplace("99", "---MAIN MENU---");
   RenderUI();
   return ret;
 }
@@ -50,6 +52,10 @@ global_type::ReturnStruct MainMenuUI::ExecuteNewGame() {
   local_hint_and_help_.clear();
   LOG("ExecuteNewGame called");
   local_hint_and_help_.emplace("1", "Main Menu chosen, please wait some time to start game :)");
+
+  current_state_ = UI::UIState::END;
+  next_session_ = UISession::DIFFICULTY_SELECT;
+
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 

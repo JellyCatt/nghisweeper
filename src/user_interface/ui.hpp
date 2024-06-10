@@ -26,11 +26,13 @@ public:
     UNKNOWN
   };
   UI(std::shared_ptr<renderer::Renderer> renderer,
-     std::shared_ptr<logger::Logger> logger) : renderer_(renderer),
+     std::shared_ptr<logger::Logger> logger,
+     std::map<std::string,std::string> init_info) : renderer_(renderer),
                                                logger_(logger),
                                                current_state_(UIState::IN_OPERATE),
                                                next_session_(UISession::UNKNOWN),
-                                               next_session_info_{} {}
+                                               next_session_info_{},
+                                               init_info_(init_info) {}
 
   virtual global_type::ReturnStruct FeedCommand(const std::vector<std::string>& command) = 0;
   virtual global_type::ReturnStruct RenderUI() = 0;
@@ -42,6 +44,7 @@ public:
 protected:
   UIState current_state_;
   UISession next_session_;
+  std::map<std::string,std::string> init_info_;
   std::map<std::string,std::string> next_session_info_;
   std::shared_ptr<renderer::Renderer> renderer_;
   std::shared_ptr<logger::Logger> logger_;

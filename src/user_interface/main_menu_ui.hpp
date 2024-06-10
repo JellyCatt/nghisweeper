@@ -10,7 +10,8 @@ namespace ui {
 class MainMenuUI : public UI {
 public:
   MainMenuUI(std::shared_ptr<renderer::Renderer> renderer,
-             std::shared_ptr<logger::Logger> logger);
+             std::shared_ptr<logger::Logger> logger,
+             std::map<std::string,std::string> init_info);
   global_type::ReturnStruct FeedCommand(const std::vector<std::string>& command) override;
   global_type::ReturnStruct RenderUI() override;
 

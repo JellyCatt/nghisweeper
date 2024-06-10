@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <map>
 
 #include "logger.hpp"
 #include "renderer.hpp"
@@ -19,7 +20,7 @@ public:
   global_type::ReturnStruct FeedCommand(const std::vector<std::string>& command);
 private:
 
-  global_type::ReturnStruct InitNextUI(UISession next_session);
+  global_type::ReturnStruct InitNextUI(UISession next_session, std::map<std::string, std::string> next_session_info);
   
   std::shared_ptr<renderer::Renderer> renderer_;
   std::shared_ptr<logger::Logger> logger_;

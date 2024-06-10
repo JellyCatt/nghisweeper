@@ -7,7 +7,8 @@ namespace ui {
 class GameplayUI : public UI {
 public:
   GameplayUI(std::shared_ptr<renderer::Renderer> renderer,
-     std::shared_ptr<logger::Logger> logger) : UI(renderer, logger) {}
+     std::shared_ptr<logger::Logger> logger,
+     std::map<std::string,std::string> init_info) : UI(renderer, logger, init_info) {}
   global_type::ReturnStruct FeedCommand(const std::vector<std::string>& command) override { return global_type::ReturnStruct{global_type::ReturnState::OK}; }
   global_type::ReturnStruct RenderUI() override { return global_type::ReturnStruct{global_type::ReturnState::OK}; }
 };
