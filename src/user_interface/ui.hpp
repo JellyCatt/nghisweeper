@@ -48,8 +48,6 @@ protected:
   std::map<std::string,std::string> next_session_info_;
   std::shared_ptr<renderer::Renderer> renderer_;
   std::shared_ptr<logger::Logger> logger_;
-  std::map<std::string,std::function<global_type::ReturnStruct(void)>> ui_execute_map_;
-
 };
 } // namespace user_interface
 

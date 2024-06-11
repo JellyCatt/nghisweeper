@@ -22,6 +22,7 @@ private:
   global_type::ReturnStruct ExecuteOther();
 
   std::map<std::string,std::string> local_hint_and_help_;
+  std::map<std::string,std::function<global_type::ReturnStruct(void)>> ui_execute_map_;
 };
 /* Brief appearance
 ---MAIN MENU---

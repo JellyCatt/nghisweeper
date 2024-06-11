@@ -10,7 +10,7 @@
 namespace ui {
 MainMenuUI::MainMenuUI(std::shared_ptr<renderer::Renderer> renderer,
              std::shared_ptr<logger::Logger> logger,
-             std::map<std::string,std::string> init_info) : UI(renderer, logger, init_info), local_hint_and_help_{} {
+             std::map<std::string,std::string> init_info) : UI(renderer, logger, init_info), local_hint_and_help_{}, ui_execute_map_{} {
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("1", std::bind(&MainMenuUI::ExecuteNewGame, this)));
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("2", std::bind(&MainMenuUI::ExecuteHelp, this)));
   ui_execute_map_.emplace(std::pair<std::string,std::function<global_type::ReturnStruct(void)>>("3", std::bind(&MainMenuUI::ExecuteExit, this)));
