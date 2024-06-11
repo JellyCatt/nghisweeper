@@ -1,4 +1,6 @@
 #include "console_renderer.hpp"
+
+#include <unistd.h> 
 #include "log_macro.hpp"
 
 namespace renderer {
@@ -20,26 +22,26 @@ void ConsoleRenderer::Render(RenderRequest request) {
   PrintAdditionalInfo(request.GetAdditionalInfo());
 }
 
-uint8_t ConsoleRenderer::GetRenderChar(mine_field::Cell cell_info) {
+std::string ConsoleRenderer::GetRenderChar(mine_field::Cell cell_info) {
   if (!cell_info.is_revealed_) {
     if (cell_info.user_interract_ == mine_field::UserInterract::FLAGGED) {
-      return CHAR_FLAG;
+      return std::string(CHAR_FLAG);
     }
     if (cell_info.user_interract_ == mine_field::UserInterract::QUESTIONED) {
-      return CHAR_QUES;
+      return std::string(CHAR_QUES);
     } else {
-      return CHAR_NONE;
+      return std::string(CHAR_NONE);
     }
   } else {
     if (cell_info.content_ >= 9) {
-      return CHAR_BOMB;
+      return std::string(CHAR_BOMB);
     } else {
-      return (cell_info.content_ + 48);
+      return std::to_string(cell_info.content_);
     }
   }
 }
 
-void ConsoleRenderer::ClearScreen() { std::cout << "\033[2J\033[1;1H"; }
+void ConsoleRenderer::ClearScreen() { system("clear"); }
 
 void ConsoleRenderer::PrintMap(mine_field::mine_field_data map_data) {
   auto height = map_data.size();
@@ -48,7 +50,7 @@ void ConsoleRenderer::PrintMap(mine_field::mine_field_data map_data) {
   PrintOneDashRow(width);
   for (int row = 0; row < height; row++) {
     for (int col = 0; col < width; col++) {
-      uint8_t print_char = GetRenderChar(map_data[row][col]);
+      std::string print_char = GetRenderChar(map_data[row][col]);
       std::cout << "|" << print_char;
     }
     std::cout << "|" << std::endl;

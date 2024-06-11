@@ -30,7 +30,7 @@ GameplayUI::GameplayUI(std::shared_ptr<renderer::Renderer> renderer,
 
 global_type::ReturnStruct GameplayUI::FeedCommand(const std::vector<std::string>& command) {
   // the first element of vector will be the command for MainMenu UI
-  LOG("MainMenuUI::FeedCommand() A command has been feed to MainMenu UI ");
+  LOG("MainMenuUI::FeedCommand() A command has been feed to Gameplay UI ");
   global_type::ReturnStruct ret;
 
   std::string choice = *(command.begin());
@@ -102,24 +102,31 @@ global_type::ReturnStruct GameplayUI::InitNewGame(mine_field::Difficulty diff) {
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
 
-static uint16_t ExtractInteger(const std::string& input) {
+uint16_t GameplayUI::ExtractInteger(const std::string& input) {
+  LOG("ExtractInteger() extracting input: " << input);
   uint16_t ret_val;
   try {
     ret_val = std::stoi(input);
   } catch (const std::exception& e) {
+    LOG("ExtractInteger() exception caught: " << e.what());
     ret_val = 9999;
   }
-  return 9999;
+  return ret_val;
 }
 
 mine_field::Position GameplayUI::ExtractPosition(const std::vector<std::string> command) {
+  LOG("GameplayUI::ExtractPosition() called with command size: " << command.size());
+
   if (command.size() < 3) return mine_field::Position{.row_=9999,.col_=9999};
   uint16_t row = ExtractInteger(command[1]);
   uint16_t col = ExtractInteger(command[2]);
+
+  LOG("GameplayUI::ExtractPosition() position extracted: " << row << " " << col);
   return mine_field::Position{.row_=row,.col_=col};
 }
 
 global_type::ReturnStruct GameplayUI::CommandFlag(const std::vector<std::string> command) {
+  LOG("GameplayUI::CommandFlag() called");
   return local_mine_field_->Flag(ExtractPosition(command));
 }
 
@@ -138,6 +145,7 @@ global_type::ReturnStruct GameplayUI::CommandSmartReveal(const std::vector<std::
 global_type::ReturnStruct GameplayUI::CommandRestart(const std::vector<std::string> command) {
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }
+
 global_type::ReturnStruct GameplayUI::CommandNewGame(const std::vector<std::string> command) {
   return global_type::ReturnStruct{.state_=global_type::ReturnState::OK};
 }

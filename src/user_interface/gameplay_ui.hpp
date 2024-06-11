@@ -27,6 +27,7 @@ private:
   global_type::ReturnStruct InitNewGame(mine_field::Difficulty diff);
 
   mine_field::Position ExtractPosition(const std::vector<std::string> command);
+  uint16_t ExtractInteger(const std::string& input);
 
   global_type::ReturnStruct CommandFlag(const std::vector<std::string> command);
   global_type::ReturnStruct CommandQuestion(const std::vector<std::string> command);

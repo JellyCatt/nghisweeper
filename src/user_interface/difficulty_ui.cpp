@@ -13,7 +13,7 @@ DifficultyUI::DifficultyUI(std::shared_ptr<renderer::Renderer> renderer,
 }
 
 global_type::ReturnStruct DifficultyUI::FeedCommand(const std::vector<std::string>& command) {
-  LOG("DifficultyUI::FeedCommand() A command has been feed to MainMenu UI ");
+  LOG("DifficultyUI::FeedCommand() A command has been feed to Difficulty UI ");
   global_type::ReturnStruct ret;
 
   std::string choice = *(command.begin());

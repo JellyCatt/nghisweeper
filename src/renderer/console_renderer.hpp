@@ -4,11 +4,11 @@
 #include "renderer.hpp"
 
 namespace renderer {
-#define CHAR_NONE ' '
-#define CHAR_BOMB '@'
-#define CHAR_FLAG 'F'
-#define CHAR_QUES '?'
-#define CHAR_SAFE '0'
+#define CHAR_NONE " "
+#define CHAR_BOMB "@"
+#define CHAR_FLAG "F"
+#define CHAR_QUES "?"
+#define CHAR_SAFE "0"
 
 #define START_UNDERLINE "\033[4m"
 #define END_UNDERLINE "\033[0m"
@@ -24,7 +24,7 @@ private:
 
   void ClearScreen();
   void PrintOneDashRow(uint16_t map_width);
-  uint8_t GetRenderChar(mine_field::Cell cell_info);
+  std::string GetRenderChar(mine_field::Cell cell_info);
 };
 }
 
